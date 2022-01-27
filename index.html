@@ -5,98 +5,146 @@
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-     <title>FakeBook</title>
+     <title>AI ChatBot Server Post Task</title>
      
 <style>
-        * {
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        }
-
-        label {
-            margin-left: 20px;
-        }
-        .result {
-            margin-left: 20px;
-        }
-        
-        input {
-            margin-left: 20px;
-            width: 20%;
-            height: 30px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding-left: 5px;
-            margin-bottom: 10px;
-        }
-
-        button {
-            height: 30px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding-left: 5px;
-            margin-left: 20px;
-            margin-bottom: 5px;
-        }
+      *{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+ 
+          
+      }
+      .container{
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;        
+      }
+      button{
+          padding: 10px 30px;
+          border-radius: 5px;
+          color: white;
+          background-color: teal;
+          outline: none;
+          cursor: pointer;
+          border: white;
+          width: 12rem;
+      }
+      h1{
+          margin-top: 40px;
+      }
+      input{
+          padding: 10px 20px;
+      }
+      label{
+          font-size: 1.5rem;
+      }
+      #result{
+       padding: 10px;
+       margin: 2px;
+       width: 100%;
+       height: 70vh;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       flex-direction: column;
+       font-size: 20px;
+      }
+    
+      li{
+         width: 50%;
+          margin-left: 40%;
+      }
+      .circle{
+          border: 2px solid black;
+          border-radius: 50%;
+          width: 35%;
+          height: 45%;
+          padding: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          margin-top: 30px;
+          margin-bottom: 10px;
+      }
     </style>
 </head>
 
 <body>
-    
-       <label for="input">What's on your mind?</label>
-        <br>
-        <input type="text" required placeholder="I think..." id="postInput">
-        <br>
+     <div class="container">
+         <h1>AI ChatBot Server Post Task</h1>
+         <div class="circle">
+             <br>
+             <label for="input">What's on your mind?</label>
+             <br>
+             <input type="text" placeholder="I think..."  id="PostInput">
+             <br>
+             <button id="postBtn">Post</button>
+             <br>
+             <button onclick=getAllPost()>Get ALL Posts</button>
+             <br>
+        </div>
+         <ol id="result"></ol>        
+     </div>
+ <body>
+             
+<script>
+    // Opnen Source Contribute In First Time
+    const Post = ()=> {
+            let postInput = document.getElementById('PostInput');
+            if(postInput.value != ''){
+                    let Obj = {
+                    text : postInput.value
+                    }   
+                    axios.post('https://m-hamza-farooq-express-server.herokuapp.com/post', Obj) // This is use for cloud
+                        // axios.post('http://localhost:3000/post', Obj) // This is use for local system
+                            .then(function (response) {
+                                console.log(response);
+                            
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                            postInput.value = " "; 
+            }
+            else{
+                alert("Please Enter Correct Post. Empty Post Not Allowed")
+            }   
+        }
 
-        <button id="postBtn">Post</button>
-        <br>
+    let btn = document.getElementById('postBtn');
+    // Call EventListener
+    btn.addEventListener('click',Post);
 
-        <!-- <button> Get a Post </button> -->
-        <br>
-        <br>
-        <button onclick=getAllData()> Get ALL Posts </button>
-
-        <div class="result" id="result"></div>
-
-     <br>
-    <div id="table"></div>
-<body>
-     <script>
-
-let postBtn = document.getElementById('postBtn')
-postBtn.addEventListener('click',post())
-
-async function post() {
-    let post = document.getElementById("postInput").value
-    console.log(post)
-    let response = await
-     axios.post('https://first--server.herokuapp.com/post', {"text": post})
-    // console.log(response);
-};
-
-function getAllData (){
-let result = document.getElementById("result");
-    // Make a request for a user with a given ID
-    axios.get('https://first--server.herokuapp.com/posts')
-    .then(function (response) {
-        // handle success
-        console.log(response.data[0].text);
-        let data = response.data
-        let html = ""
-        for (let i = 0; i < data.length; i++) {
-            console.log(data[i].text);
-            html += `<p>${data[i].text}</p>`
-        };
-        result.innerHTML = html
+    const getAllPost = ()=>{
+        let result = document.getElementById('result');
+            //   Get Request
+                // axios.get('http://localhost:3000/posts')  // This is use for local system
+                axios.get('https://m-hamza-farooq-express-server.herokuapp.com/posts') // This is use for cloud
+                    .then(function (response) {
+                        // handle success
+                        let html = '';
+                        for(let i = 0; i<response.data.length; i++){
+                            console.log(response.data[i].text);
+                            let value = '';
+                            value +=response.data[i].text;
+                            html += `
+                            <li> ${value} </li>  
+                            <br>      
+                            `;
+                        }
+                        result.innerHTML = html;
+            
     })
-    .catch(function (error) {
-        // handle error
-        console.log(error);
-    })
-    .then(function () {
-        // always executed
-    });
-};
-
-     </script>
+    .catch(function (err) {
+            // handle error
+            console.log(err);
+        });
+    } 
+</script>
 </body>
 </html>
