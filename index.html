@@ -106,7 +106,7 @@
                     // This is for the local system
                             .then(function (response) {
                                 console.log(response);
-                                                        })
+                            })
                             .catch(function (error) {
                                 console.log(error);
                             });
@@ -124,8 +124,11 @@
     const getAllPosts = ()=>{
         let result = document.getElementById('result');
             //   Get Request
-                // axios.get('http://localhost:3000/posts')  // This is use for local system
-                axios.get('https://first--server.herokuapp.com/posts') // This is use for cloud
+                // This is use for local system
+                // axios.get('http://localhost:3000/posts')  
+                
+                // This is use for cloud
+                axios.get('https://first--server.herokuapp.com/posts') 
                     .then(function (response) {
                         // handle success
                         let html = '';
@@ -139,10 +142,9 @@
                             `;
                         }
                         result.innerHTML = html;
-            
-    })
+                    })
     .catch(function (err) {
-            // handle error
+            // handles error
             console.log(err);
         });
     } 
