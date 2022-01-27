@@ -5,7 +5,7 @@
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-     <title>AI ChatBot Server Post Task</title>
+     <title>FakeBook</title>
      
 <style>
       *{
@@ -76,16 +76,16 @@
 
 <body>
      <div class="container">
-         <h1>FakeBook Post</h1>
+         <h1>FakeBook</h1>
          <div class="circle">
              <br>
              <label for="input">What's on your mind?</label>
              <br>
-             <input type="text" placeholder="I think..."  id="PostInput">
+             <input type="text" id="PostInput" placeholder="I think...">
              <br>
              <button id="postBtn">Post</button>
              <br>
-             <button onclick=getAllPost()>Get ALL Posts</button>
+             <button onclick=getAllPosts()>Get ALL Posts</button>
              <br>
         </div>
          <ol id="result"></ol>        
@@ -93,34 +93,35 @@
  <body>
              
 <script>
-    // First Open Source Contribution
-    const Post = ()=> {
+    // Firsts Open Source Contribution
+    const post = () => {
             let postInput = document.getElementById('PostInput');
             if(postInput.value != ''){
                     let Obj = {
                     text : postInput.value
                     }   
-                    axios.post('https://first--server.herokuapp.com/post', Obj) // This is used for cloud
-                        // axios.post('http://localhost:3000/post', Obj) // This is used for local system
+                    // ** This is for the cloud **
+                    // axios.post('http://localhost:3000/post', Obj)
+                    axios.post('https://first--server.herokuapp.com/post', Obj) 
+                    // This is for the local system
                             .then(function (response) {
                                 console.log(response);
-                            
-                            })
+                                                        })
                             .catch(function (error) {
                                 console.log(error);
                             });
-                            postInput.value = " "; 
+                            postInput.value = ""; 
             }
             else{
-                alert("Please Enter Correct Post. Empty Post Not Allowed")
-            }   
+                alert("🔐 Tell me your secrets.")
+            }
         }
 
     let btn = document.getElementById('postBtn');
     // Call EventListener
-    btn.addEventListener('click',Post);
+    btn.addEventListener('click',post);
 
-    const getAllPost = ()=>{
+    const getAllPosts = ()=>{
         let result = document.getElementById('result');
             //   Get Request
                 // axios.get('http://localhost:3000/posts')  // This is use for local system
