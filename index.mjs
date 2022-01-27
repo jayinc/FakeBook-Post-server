@@ -11,11 +11,15 @@ var posts = [
   { text: "some post2" },
 ];
 
+app.get("/", (req, res) => {
+  res.send("Hola 🤠 I'm your ExpressJS server!");
+});
+
 app.get("/post/:id", (req, res) => {
   const id = Number(req.params.id);
-
   res.send(posts[id]);
 });
+
 app.get("/posts", (req, res) => {
   res.send(posts);
 });
@@ -25,9 +29,11 @@ app.post("/post", (req, res) => {
 
   res.send(`your post is saved 🥳 now we have ${posts.length} posts`);
 });
+
 app.put("/post", (req, res) => {
   res.send("I am Express.js server");
 });
+
 app.delete("/post", (req, res) => {
   res.send("I am Express.js server");
 });
