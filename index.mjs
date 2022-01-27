@@ -11,7 +11,7 @@ var posts = [
   { text: "some post2" },
 ];
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.send("Hola 🤠 I'm your ExpressJS server!");
 });
 
@@ -22,7 +22,7 @@ app.get("/post/:id", (req, res) => {
   console.log(posts);
 });
 
-app.get("/posts", (req, res) => {
+app.get("/posts", (_req, res) => {
   res.send(posts);
 });
 
@@ -32,11 +32,11 @@ app.post("/post", (req, res) => {
   res.send(`your post is saved 🥳 now we have ${posts.length} posts`);
 });
 
-app.put("/post", (req, res) => {
+app.put("/post", (_req, res) => {
   res.send("I am Express.js server");
 });
 
-app.delete("/post", (req, res) => {
+app.delete("/post", (_req, res) => {
   res.send("I am Express.js server");
 });
 
