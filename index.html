@@ -76,7 +76,7 @@
 
 <body>
      <div class="container">
-         <h1>AI ChatBot Server Post Task</h1>
+         <h1>FakeBook Post</h1>
          <div class="circle">
              <br>
              <label for="input">What's on your mind?</label>
@@ -93,15 +93,15 @@
  <body>
              
 <script>
-    // Opnen Source Contribute In First Time
+    // First Open Source Contribution
     const Post = ()=> {
             let postInput = document.getElementById('PostInput');
             if(postInput.value != ''){
                     let Obj = {
                     text : postInput.value
                     }   
-                    axios.post('https://m-hamza-farooq-express-server.herokuapp.com/post', Obj) // This is use for cloud
-                        // axios.post('http://localhost:3000/post', Obj) // This is use for local system
+                    axios.post('https://first--server.herokuapp.com/post', Obj) // This is used for cloud
+                        // axios.post('http://localhost:3000/post', Obj) // This is used for local system
                             .then(function (response) {
                                 console.log(response);
                             
@@ -124,7 +124,7 @@
         let result = document.getElementById('result');
             //   Get Request
                 // axios.get('http://localhost:3000/posts')  // This is use for local system
-                axios.get('https://m-hamza-farooq-express-server.herokuapp.com/posts') // This is use for cloud
+                axios.get('https://first--server.herokuapp.com/posts') // This is use for cloud
                     .then(function (response) {
                         // handle success
                         let html = '';
