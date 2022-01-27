@@ -17,7 +17,9 @@ app.get("/", (req, res) => {
 
 app.get("/post/:id", (req, res) => {
   const id = Number(req.params.id);
+  console.log(posts[id]);
   res.send(posts[id]);
+  console.log(posts);
 });
 
 app.get("/posts", (req, res) => {

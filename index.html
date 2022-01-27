@@ -4,6 +4,7 @@
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
      <title>FakeBook</title>
      
 <style>
@@ -12,6 +13,9 @@
         }
 
         label {
+            margin-left: 20px;
+        }
+        .result {
             margin-left: 20px;
         }
         
@@ -37,30 +41,62 @@
 </head>
 
 <body>
-    <form onsubmit="generateTable(); return false;">
-
-        <!-- <label for="input1">Your Name? : </label>
-        <input type="number" required placeholder="Enter a name" id="input1">
-        <br> -->
-
-        <label for="input">What's on your mind?</label>
+    
+       <label for="input">What's on your mind?</label>
         <br>
-        <input type="text" required placeholder="I think..." id="input">
+        <input type="text" required placeholder="I think..." id="postInput">
         <br>
 
-        <button type="submit"> Post </button>
+        <button id="postBtn">Post</button>
         <br>
 
-        <button> Get a Post </button>
+        <!-- <button> Get a Post </button> -->
         <br>
         <br>
-        <button onclick=getData(); return false;> Get ALL Posts </button>
-    </form>
+        <button onclick=getAllData()> Get ALL Posts </button>
 
+        <div class="result" id="result"></div>
 
-    <br>
+     <br>
     <div id="table"></div>
 <body>
-     <script src=index.mjs"></script>
+     <script>
+
+let postBtn = document.getElementById('postBtn')
+postBtn.addEventListener('click',post())
+
+async function post() {
+    let post = document.getElementById("postInput").value
+    console.log(post)
+    let response = await
+     axios.post('https://first--server.herokuapp.com/post', {"text": post})
+    // console.log(response);
+};
+
+function getAllData (){
+let result = document.getElementById("result");
+    // Make a request for a user with a given ID
+    axios.get('https://first--server.herokuapp.com/posts')
+    .then(function (response) {
+        // handle success
+        console.log(response.data[0].text);
+        let data = response.data
+        let html = ""
+        for (let i = 0; i < data.length; i++) {
+            console.log(data[i].text);
+            html += `<p>${data[i].text}</p>`
+        };
+        result.innerHTML = html
+    })
+    .catch(function (error) {
+        // handle error
+        console.log(error);
+    })
+    .then(function () {
+        // always executed
+    });
+};
+
+     </script>
 </body>
 </html>
